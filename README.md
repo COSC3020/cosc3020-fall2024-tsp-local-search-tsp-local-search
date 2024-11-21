@@ -102,5 +102,11 @@ Adding those up
 - Memory complexity of $\Theta(n + (n - 1)! * n + (n - 1)!) \in \Theta((n - 1)! * n)$
 
 I wrote this independently but I did have to look up some syntax. 
+
 https://www.w3schools.com/js/js_sets.asp
+
 https://stackoverflow.com/questions/5765398/whats-the-best-way-to-convert-a-number-to-a-string-in-javascript
+
+https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+
+I certify that I have listed all sources used to complete this exercise, including the use of any Large Language Models. All of the work is my own, except where stated otherwise. I am aware that plagiarism carries severe penalties and that if plagiarism is suspected, charges may be filed against me without prior notice.
