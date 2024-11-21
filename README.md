@@ -53,3 +53,4 @@ reasoning, to this markdown file.
 
 
 https://www.w3schools.com/js/js_sets.asp
+https://stackoverflow.com/questions/5765398/whats-the-best-way-to-convert-a-number-to-a-string-in-javascript
