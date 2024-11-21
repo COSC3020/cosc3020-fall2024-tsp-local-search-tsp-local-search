@@ -1,27 +1,26 @@
 
 function tsp_ls(distance_matrix) {
   let n = distance_matrix.length;
-  let minCost = Infinity; // Start with an arbitrarily high value
-  let minRoute = Array.from({ length: n }, (v, i) => i);  // Initial route is just 0, 1, 2, ..., n-1
-
-  // Initial route cost calculation
+  let memo = new Set();
+  
+  let minCost = Infinity;
+  let minRoute = Array.from({ length: n }, (v, i) => i).sort((a, b) => 0.5 - Math.random());
+  
   let cost = 0;
   for (let i = 0; i < n - 1; i++) {
     cost += distance_matrix[i][i + 1];
   }
-  minCost = cost;  // Set the initial cost
-
-  for (let i = 0; i < (n - 1); i++) {
+  minCost = cost;
+  for (let i = 0; i < factorial(n - 1); i++) {
     let routePath = [...minRoute];
-    
-    let r = Math.floor(Math.random() * n);  // Random index r between 0 and n-1
-    let l = Math.floor(Math.random() * (n - r - 1)) + r + 1;  // Random index l greater than r
-
+    let r = Math.floor(Math.random() * (n - 1)) + 1;
+    let l = Math.floor(Math.random() * (n - r - 1)) + r + 1;
+    if (memo.has(`${r}, ${l}`)) continue;
+    memo.add(`${r}, ${l}`);
     swap(routePath, r, l);
-    
-    // Calculate the cost of the new route
+
     let newCost = 0;
-    for (let i = 0; i < n - 1; i++) {
+    for (let i = 0; i < (n - 1); i++) {
       newCost += distance_matrix[routePath[i]][routePath[i + 1]];
     }
 
@@ -44,32 +43,11 @@ function swap(arr, r, l) {
   }
 }
 
-
-
-
-dm = [[]];
-console.log(tsp_ls(dm) == 0);
-
-dm = [[0]];
-//console.log(tsp_ls(dm) == 0);
-console.log(tsp_ls(dm));
-
-dm = [[0,0,0],
-      [0,0,0],
-      [0,0,0]];
-//console.log(tsp_ls(dm) == 0);
-console.log(tsp_ls(dm));
-
-dm = [[0,1,2],
-      [1,0,2],
-      [2,2,0]];
-//console.log(tsp_ls(dm) >= 3);
-console.log(tsp_ls(dm));
-
-dm = [[0,3,4,2,7],
-      [3,0,4,6,3],
-      [4,4,0,5,8],
-      [2,6,5,0,6],
-      [7,3,8,6,0]];
-// console.log(tsp_ls(dm) >= 13);
-console.log(tsp_ls(dm));
+//From my Euler 
+function factorial(n) {
+    let fact = 1;
+    for (i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
+}
