@@ -56,31 +56,36 @@ Recall my code,
 function tsp_ls(distance_matrix) {
   let n = distance_matrix.length;
   let memo = new Set();
-  let minRoute = Array.from({ length: n }, (v, i) => i).sort((a, b) => 0.5 - Math.random()); // This is memory complexity of O(n)
+  let minRoute = Array.from({ length: n }, (v, i) => i).sort((a, b) => 0.5 - Math.random());// This is memory complexity of O(n)
   let minCost = calcCost(minRoute, distance_matrix); // This is time complexity of O(n) and memory complexity of O(1)
-  for (let i = 0; i < factorial(n - 1); i++) { // This is time complexity of O((n - 1)!) and calculating factorial(n - 1) is O(n) time
-    let routePath = [...minRoute]; // This is memory complexity of O(n)
-    let r = Math.floor(Math.random() * (n - 1)) + 1;
-    let l = Math.floor(Math.random() * (n - r - 1)) + (r + 1);
+  let improving = true;
+  // In the worst case, this is time complexity of \Theta(n^2) because it'll loop through every possible r and l choice in the order of worst to best 
+  while(improving) { 
+    let routePath = [...minRoute]; // Get a deep copy of min route
+    let r = Math.floor(Math.random() * (n - 1)) + 1; // Random Number in the range 1 to n - 1
+    let l = Math.floor(Math.random() * (n - r - 1)) + (r + 1); // Random number in the range r + 1 to n
+    // If the swap was already done don`t undo it
     if (memo.has(`${r}, ${l}`)) continue;
-    memo.add(`${r}, ${l}`); // The worst case memory complexity of this is \Theta((n + 1)!)
-    swap(routePath, r, l); // This is time complexity of O(n) 
-    let newCost = calcCost(routePath, distance_matrix); // This is time complexity of O(n)
+    improving = false;
+    memo.add(`${r}, ${l}`); // The worst case memory complexity is \Theta(n^2)
+    swap(routePath, r, l); // This is time complexity of \Theta(n)
+    let newCost = calcCost(routePath, distance_matrix); // This is O(n) time complexity
     if (newCost < minCost) {
       minCost = newCost;
       minRoute = routePath;
+      improving = true;
     }
   }
   return minCost;
 }
- function calcCost(route, distance_matrix){ // This is time complexity of O(n)
+ function calcCost(route, distance_matrix){ // This is time complexity of \Theta(n)
     let newCost = 0;
     for (let i = 0; i < distance_matrix.length - 1; i++) {
       newCost += distance_matrix[route[i]][route[i + 1]];
     }
     return newCost;
  }
-function swap(arr, r, l) { // This is time complexity of O(n)
+function swap(arr, r, l) { // This is time complexity of \Theta(n)
   while (r < l) {
     let temp = arr[r];
     arr[r] = arr[l];
@@ -89,19 +94,12 @@ function swap(arr, r, l) { // This is time complexity of O(n)
     l--;
   }
 }
-function factorial(n) { // This is time complexity of O(n)
-    let fact = 1;
-    for (i = 1; i <= n; i++) {
-        fact *= i;
-    }
-    return fact;
-}
 ```
 Adding those up
-- Time complexity of $\Theta((n + ((n - 1)! + n)*(n + n))) \in \Theta((n - 1)! * n)$
-- Memory complexity of $\Theta(n + (n - 1)! * n + (n - 1)!) \in \Theta((n - 1)! * n)$
+- Time complexity of $\Theta((n + n^2 * (n + n))) \in \Theta(n^3)$
+- Memory complexity of $\Theta(n + n^2)) \in \Theta(n^2)$
 
-I wrote this independently but I did have to look up some syntax. 
+I wrote this independently but I did have to look up some syntax. I also talked after class about how to decide when to stop swapping.
 
 https://www.w3schools.com/js/js_sets.asp
 
