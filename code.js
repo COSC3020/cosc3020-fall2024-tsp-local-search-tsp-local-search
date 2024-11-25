@@ -6,14 +6,14 @@ function tsp_ls(distance_matrix) {
   let improving = true;
   
   while(improving) {
-    improving = false;
     let routePath = [...minRoute]; // Get a deep copy of min route
     let r = Math.floor(Math.random() * (n - 1)) + 1; // Random Number in the range 1 to n - 1
     let l = Math.floor(Math.random() * (n - r - 1)) + (r + 1); // Random number in the range r + 1 to n
     
     // If the swap was already done don't undo it
     if (memo.has(`${r}, ${l}`)) continue;
-    memo.add(`${r}, ${l}`);
+    improving = false;
+    memo.add(${r}, ${l});
     swap(routePath, r, l);
 
     let newCost = calcCost(routePath, distance_matrix);
@@ -44,7 +44,6 @@ function swap(arr, r, l) {
     l--;
   }
 }
-
 dm = [[]];
 console.log(tsp_ls(dm) == 0);
 
