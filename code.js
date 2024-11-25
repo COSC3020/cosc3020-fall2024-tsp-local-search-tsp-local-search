@@ -13,7 +13,7 @@ function tsp_ls(distance_matrix) {
     // If the swap was already done don't undo it
     if (memo.has('${r}, ${l}')) continue;
     improving = false;
-    memo.add(${r}, ${l});
+    memo.add('${r}, ${l}');
     swap(routePath, r, l);
 
     let newCost = calcCost(routePath, distance_matrix);
