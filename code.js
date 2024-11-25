@@ -3,8 +3,10 @@ function tsp_ls(distance_matrix) {
   let memo = new Set();
   let minRoute = Array.from({ length: n }, (v, i) => i).sort((a, b) => 0.5 - Math.random());
   let minCost = calcCost(minRoute, distance_matrix);
+  let improving = true;
   
-  for (let i = 0; i < factorial(n - 1); i++) {
+  while(improving) {
+    improving = false;
     let routePath = [...minRoute]; // Get a deep copy of min route
     let r = Math.floor(Math.random() * (n - 1)) + 1; // Random Number in the range 1 to n - 1
     let l = Math.floor(Math.random() * (n - r - 1)) + (r + 1); // Random number in the range r + 1 to n
@@ -19,6 +21,7 @@ function tsp_ls(distance_matrix) {
     if (newCost < minCost) {
       minCost = newCost;
       minRoute = routePath;
+      improving = true;
     }
   }
   
@@ -42,11 +45,25 @@ function swap(arr, r, l) {
   }
 }
 
-//From my Euler 
-function factorial(n) {
-    let fact = 1;
-    for (i = 1; i <= n; i++) {
-        fact *= i;
-    }
-    return fact;
-}
+dm = [[]];
+console.log(tsp_ls(dm) == 0);
+
+dm = [[0]];
+console.log(tsp_ls(dm) == 0);
+
+dm = [[0,0,0],
+      [0,0,0],
+      [0,0,0]];
+console.log(tsp_ls(dm) == 0);
+
+dm = [[0,1,2],
+      [1,0,2],
+      [2,2,0]];
+console.log(tsp_ls(dm) >= 3);
+
+dm = [[0,3,4,2,7],
+      [3,0,4,6,3],
+      [4,4,0,5,8],
+      [2,6,5,0,6],
+      [7,3,8,6,0]];
+console.log(tsp_ls(dm) >= 13);
