@@ -10,10 +10,10 @@ function tsp_ls(distance_matrix) {
     let r = Math.floor(Math.random() * (n - 1)) + 1; // Random Number in the range 1 to n - 1
     let l = Math.floor(Math.random() * (n - r - 1)) + (r + 1); // Random number in the range r + 1 to n
     
-    // If the swap was already done don't undo it
-    if (memo.has('${r}, ${l}')) continue;
+    // If the swap was already done don`t undo it
+    if (memo.has(`${r}, ${l}`)) continue;
     improving = false;
-    memo.add('${r}, ${l}');
+    memo.add(`${r}, ${l}`);
     swap(routePath, r, l);
 
     let newCost = calcCost(routePath, distance_matrix);
