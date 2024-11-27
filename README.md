@@ -64,17 +64,18 @@ function tsp_ls(distance_matrix) {
     let routePath = [...minRoute]; // Get a deep copy of min route
     let r = Math.floor(Math.random() * (n - 1)) + 1; // Random Number in the range 1 to n - 1
     let l = Math.floor(Math.random() * (n - r - 1)) + (r + 1); // Random number in the range r + 1 to n
-    // If the swap was already done don`t undo it
-    if (memo.has(`${r}, ${l}`)) continue;
-    improving = false;
-    memo.add(`${r}, ${l}`); // The worst case memory complexity is \Theta(n^2)
-    swap(routePath, r, l); // This is time complexity of \Theta(n)
+    swap(routePath, r, l);// This is time complexity of \Theta(n)
+    // If route was already computed don't recompute it
+    let routeKey = routePath.join(",");
+    if (memo.has(routeKey)) continue;
+    memo.add(routeKey); // The worst case memory complexity is \Theta(n!)
     let newCost = calcCost(routePath, distance_matrix); // This is O(n) time complexity
     if (newCost < minCost) {
       minCost = newCost;
       minRoute = routePath;
       improving = true;
     }
+    else improving = false; // no improvement
   }
   return minCost;
 }
@@ -96,8 +97,8 @@ function swap(arr, r, l) { // This is time complexity of \Theta(n)
 }
 ```
 Adding those up
-- Time complexity of $\Theta((n + n^2 * (n + n))) \in \Theta(n^3)$
-- Memory complexity of $\Theta(n + n^2)) \in \Theta(n^2)$
+- Time complexity of $\Theta((n + n! * (n + n))) \in \Theta(n * n!)$
+- Memory complexity of $\Theta(n + n!)) \in \Theta(n!)$
 
 I wrote this independently but I did have to look up some syntax. I also talked after class about how to decide when to stop swapping.
 
