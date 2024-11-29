@@ -55,7 +55,6 @@ Recall my code,
 ```js
 function tsp_ls(distance_matrix) {
   let n = distance_matrix.length;
-  let memo = new Set();
   let minRoute = Array.from({ length: n }, (v, i) => i).sort((a, b) => 0.5 - Math.random());// This is memory complexity of O(n)
   let minCost = calcCost(minRoute, distance_matrix); // This is time complexity of O(n) and memory complexity of O(1)
   let improving = true;
@@ -65,10 +64,6 @@ function tsp_ls(distance_matrix) {
     let r = Math.floor(Math.random() * (n - 1)) + 1; // Random Number in the range 1 to n - 1
     let l = Math.floor(Math.random() * (n - r - 1)) + (r + 1); // Random number in the range r + 1 to n
     swap(routePath, r, l);// This is time complexity of \Theta(n)
-    // If route was already computed don't recompute it
-    let routeKey = routePath.join(",");
-    if (memo.has(routeKey)) continue;
-    memo.add(routeKey); // The worst case memory complexity is \Theta(n!)
     let newCost = calcCost(routePath, distance_matrix); // This is O(n) time complexity
     if (newCost < minCost) {
       minCost = newCost;
@@ -97,8 +92,8 @@ function swap(arr, r, l) { // This is time complexity of \Theta(n)
 }
 ```
 Adding those up
-- Time complexity of $\Theta((n + n! * (n + n))) \in \Theta(n * n!)$
-- Memory complexity of $\Theta(n + n!)) \in \Theta(n!)$
+- Time complexity of $\Theta((n + n^2 * (n + n))) \in \Theta(n^3)$
+- Memory complexity of $\Theta(n + n^2)) \in \Theta(n^2)$
 
 I wrote this independently but I did have to look up some syntax. I also talked after class about how to decide when to stop swapping.
 
