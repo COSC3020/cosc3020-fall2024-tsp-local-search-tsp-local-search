@@ -60,7 +60,7 @@ function tsp_ls(distance_matrix) {
   let improving = true;
   // In the worst case, this is time complexity of \Theta(n^2) because it'll loop through every possible r and l choice in the order of worst to best 
   while(improving) { 
-    let routePath = [...minRoute]; // Get a deep copy of min route
+    let routePath = [...minRoute]; // Get a shallow copy of min route O(n) 
     let r = Math.floor(Math.random() * (n - 1)) + 1; // Random Number in the range 1 to n - 1
     let l = Math.floor(Math.random() * (n - r - 1)) + (r + 1); // Random number in the range r + 1 to n
     swap(routePath, r, l);// This is time complexity of \Theta(n)
@@ -91,9 +91,17 @@ function swap(arr, r, l) { // This is time complexity of \Theta(n)
   }
 }
 ```
-Adding those up
+
+Before adding those up, it is useful to note that for our purposes
+
+$$
+{n}\choose{2} = \frac{n(n-1)}{2} \in O(n^2)
+$$
+
+The while loop terminates when no improvement is found in a single iteration. In the worst case, it may explore all possible swaps of two cities,  which is ${n}\choose{2} = \frac{n(n-1)}{2} \in \Theta(n^2)$. Also note that each iteration involves calculating the cost of the route O(n)
+and performing a swap O(n). Now adding those up:
 - Time complexity of $\Theta((n + n^2 * (n + n))) \in \Theta(n^3)$
-- Memory complexity of $\Theta(n + n^2)) \in \Theta(n^2)$
+- Memory complexity of $\Theta(n + n)) \in \Theta(n)$
 
 I wrote this independently but I did have to look up some syntax. I also talked after class about how to decide when to stop swapping.
 
