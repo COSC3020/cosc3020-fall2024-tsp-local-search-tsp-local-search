@@ -91,15 +91,10 @@ function swap(arr, r, l) { // This is time complexity of \Theta(n)
   }
 }
 ```
+The while loop terminates when no improvement is found in a single iteration. In the worst case, it may explore all possible swaps of two cities,  which is ${{n}\choose{2}} = \frac{n(n-1)}{2} \in \Theta(n^2)$. Also note that each iteration involves calculating the cost of the route O(n)
+and performing a swap O(n). 
 
-Before adding those up, it is useful to note that for our purposes
-
-$$
-{n}\choose{2} = \frac{n(n-1)}{2} \in O(n^2)
-$$
-
-The while loop terminates when no improvement is found in a single iteration. In the worst case, it may explore all possible swaps of two cities,  which is ${n}\choose{2} = \frac{n(n-1)}{2} \in \Theta(n^2)$. Also note that each iteration involves calculating the cost of the route O(n)
-and performing a swap O(n). Now adding those up:
+Now adding those up:
 - Time complexity of $\Theta((n + n^2 * (n + n))) \in \Theta(n^3)$
 - Memory complexity of $\Theta(n + n)) \in \Theta(n)$
 
