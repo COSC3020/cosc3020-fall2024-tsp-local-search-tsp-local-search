@@ -58,7 +58,7 @@ function tsp_ls(distance_matrix) {
   let minRoute = Array.from({ length: n }, (v, i) => i).sort((a, b) => 0.5 - Math.random());// This is memory complexity of O(n)
   let minCost = calcCost(minRoute, distance_matrix); // This is time complexity of O(n) and memory complexity of O(1)
   let improving = true;
-  // In the worst case, this is time complexity of \Theta(n^2) because it'll loop through every possible r and l choice in the order of worst to best 
+  // In the worst case, this is time complexity of \Theta(n!) because it'll loop through every possible permuation in the order of worst to best 
   while(improving) { 
     let routePath = [...minRoute]; // Get a shallow copy of min route O(n) 
     let r = Math.floor(Math.random() * (n - 1)) + 1; // Random Number in the range 1 to n - 1
@@ -91,11 +91,10 @@ function swap(arr, r, l) { // This is time complexity of \Theta(n)
   }
 }
 ```
-For the time complexity, note that the while loop terminates when no improvement is found in a single iteration. In the worst case, it may explore all possible swaps of two cities,  which is ${{n}\choose{2}} = \frac{n(n-1)}{2} \in \Theta(n^2)$. Also note that each iteration involves calculating the cost of the route O(n)
-and performing a swap O(n). 
+For the time complexity, note that the while loop terminates when no improvement is found in a single iteration. In the worst case, it may explore all possible permuations of cities,  which is $\Theta(n!)$. Also note that each iteration involves calculating the cost of the route O(n) and performing a swap O(n). 
 
 Now adding those up:
-- Time complexity of $\Theta((n + n^2 * (n + n))) \in \Theta(n^3)$
+- Time complexity of $\Theta((n + n! * (n + n))) \in \Theta(n * n!)$
 - Memory complexity of $\Theta(n + n)) \in \Theta(n)$
 
 I wrote this independently but I did have to look up some syntax. I also talked after class about how to decide when to stop swapping.
